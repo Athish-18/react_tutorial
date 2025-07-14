@@ -1,15 +1,14 @@
 import './App.css'
-import Student  from "./Student.jsx"
+import UserGreeting from "./UserGreeting.jsx"
+
+// Condition Rendering -- allows you to control what gets rendered in your application based on certain conditions (show , hide , or change components)
 function App() {
   return (
     <>
-      <Student name="spongebob" age={30} isStudent={true}></Student>
-      <Student name="spon" age={40} isStudent={false}></Student>
-      <Student name="sbob" age={100} isStudent={true}></Student>
-
-      <Student name="bob" age={15} isStudent={true}></Student>
+     <UserGreeting isLoggedIn={false} username="BroCode"></UserGreeting>
     </>
   );
 }
+
 
 export default App;
