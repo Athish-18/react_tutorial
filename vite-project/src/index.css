@@ -1,12 +1,12 @@
-.welcome-message{
-  font-size: larger;
-  font-weight: bold;
+.heading
+{
+  font-size: x-large;
   color: blue;
-
+  font-style: oblique;
+  
 }
 
-.login-message{
-  font-size: x-large;
-    font-weight: lighter;
-    color: rgb(0, 255, 72);
+.items
+{
+  color: brown;
 }

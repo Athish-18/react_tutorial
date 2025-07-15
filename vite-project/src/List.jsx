@@ -1,46 +1,27 @@
-function List() {
-  /*const fruits = ["apple", "banana", "mango", "orange"];
-
-  // fruits.sort();
-
-  const listItems = fruits.map(fruit=><li>{fruit}</li>)
-
-  return <ol>{listItems}</ol>;
-  */
-
-  //Array of objects
-  const fruits = [
-    { id: 3, name: "apple", calories: 95 },
-    { id: 4, name: "pineapple", calories: 98 },
-    { id: 5, name: "banana", calories: 102 },
-    { id: 6, name: "coconut", calories: 108 },
-  ];
-
-  //fruits.sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical
-  //fruits.sort((a, b) => b.name.localeCompare(a.name)); // Alphabetical reverse
-  // fruits.sort((a, b) => a.calories - b.calories); // by calories ascending order
-  //fruits.sort((a, b) => b.calories - a.calories); // by calories descending order
-
-  /*
-  const listItems = fruits.map((fruit) => (
-    <li key={fruit.id}>
-      {fruit.name}
-      {fruits.calories}
+function List(props) {
+ const category=props.category;
+ const itemList=props.items;
+  const listItems = itemList.map((item) => (
+    <li key={item.id}>
+      {item.name}
+      <p>{item.calories} </p>
     </li>
   ));
-*/
 
-  //Filter based on some  properties
-
-  const lowcalFruits = fruits.filter((fruit) => fruit.calories < 100);
-  const listItems = lowcalFruits.map((lowcalFruit) => (
-    <li key={lowcalFruit.id}>
-      {lowcalFruit.name}
-      {lowcalFruit.calories}
-    </li>
-  ));
-  // const highcalFruit = fruits.filter((fruit) => fruit.calories > 100);
-
-  return <ol>{listItems}</ol>;
+  return  <>
+          <h3 className="heading">{category}</h3>
+          <ol className="items">{listItems}</ol></>;
 }
+
+
+List.defaultProps={
+  category:"Category",
+  items:[],
+}
+
+
+
+List.propTypes={
+  category:PropTypes.string
+,items:PropTypes.arrayOf(PropTypes.shape({id:PropTypes.number,name:PropTypes.string,calories : PropTypes.number}))}
 export default List;
