@@ -1,8 +1,16 @@
-import Button from "./Button.jsx"
-// click ervent : An interactiuon when a user clicks on we can respond to clicks by passing acallback to the onclick event handler 
+import React from "react";
+//Passing Props ie all the other tags inside Card as chidren
+import Cards from"./Cards.jsx"
 function App() {
   return (
-     <Button> </Button>
-  )
+    <>
+      <Cards>
+        <h3>I am Athish</h3>
+        <p>Learning Webdev</p>
+        <p>Learning React</p>
+      </Cards>
+      <Cards children="I m a child">I m out  </Cards>
+    </> // this will render if no children passed explicitly 
+  );
 }
 export default App;
