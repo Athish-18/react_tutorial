@@ -1,20 +1,14 @@
-import React, { useState } from "react";
-import Button from "./Button.jsx"
+import React, { useState } from 'react'
+import Card from "./Card.jsx"
 function App() {
-
-  const[count,setCount]=useState(0);
-
-  function handleClick()
-  {
-    setCount(count+1);
-  }
+  // Create , manage , handle all state
+  const[name,setName]=useState(" ")
   return (
-    <>
-    <Button handleClick={handleClick} text="click Me">
-      <h1>{count}</h1>
-
-    </Button>
-      </>
-  );
+    <div>
+      <Card name={name} setName={setName}> </Card>
+      <p> I m the parent component and value of name is {name} </p>
+    </div>
+  )
 }
-export default App;
+
+export default App
