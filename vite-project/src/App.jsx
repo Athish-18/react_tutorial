@@ -1,59 +1,122 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+
 const App = () => {
-  /*
-  function handleClick()
-  {
-    alert("U clicked");
+  // useEffect is used to generate side effects
+  // first - fn to generate side efffects
+  // second - cleanup logic
+  // third - an array where the value if updated gets called to avail side_effect
+  /* useEffect(() => {
+    first
+  
+    return () => {
+      second
+    }
+  }, [third])
+   */
+
+
+  // variation 1
+  //runs on every render ie every time there is a change in UI this renders ie i will run everytime when u render on every click , first this statement runs then count incremented
+  /* const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
   }
+  useEffect(() => {
+    alert("i will run everytime when u render");
+  });
+
   return (
-    <button  onClick={handleClick}> Please click me</button>
-  ) */
+    <div>
+      <button onClick={handleClick}> Click Me </button>
+      <p> Count is {count}times</p>
+    </div>
+  ); */
 
+  
+  // variation 2 :renders only once ie on the first render
+  /* useEffect(() => {
 
-    /*  return (
-      <btton onClick={alert("i got clicked")} // dont do immediate invocation runs only once 
-       <button  onClick={()=>{alert("i got clicked")}}>  // this is req to work and avoid the issue above
-         Please click me
-       </button>
-     ); */
+ alert("I ll render for the first render only")
+}, [])
 
+const[count,setCount]=useState(0);
+function handleClick()
+{
+  setCount(count+1);
+}
 
-     /* function handleMouseover()
-     {
-      alert("u hovered over me")
-     }
-
-     return(
-     <p onMouseOver={handleMouseover}> I m a para</p> ) */
-
-
-     /* function handleInputChange(e)
-     {
-      console.log("value changed in console");
-      console.log("value till now", e.target.value);
-     }
-
-     return(
-      <form >
-        <input type="text" onChange={handleInputChange}></input>
-      </form>
-     )
-
+return(<div>
+  <button onClick={handleClick} > Click Me</button>
+  <p> Count is {count} times </p>
+</div>)
  */
 
 
-    /*  function handleSubmit(e) {
-       e.preventDefault(); // prevent page reload
-       alert("Shall I submit?");
-     }
-
-     return (
-       <form onSubmit={handleSubmit}>
-         <button type="submit">Submit</button>
-       </form>
-     ); */
-
-
+  //Variation 3
+  /* const[count,setCount]=useState(0);
+function handleClick()
+{
+  setCount(count+1);
 }
 
-export default App
+useEffect(() => {
+  alert("I will render everytime count is updated ");
+}, [count]);
+
+return(<div>
+  <button onClick={handleClick} > Click Me</button>
+  <p> Count is {count} times </p>
+</div>) */
+
+
+  //variation 4 --Multiple dependencies , even if one updates the other also changes
+  /* const [count, setCount] = useState(0);
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  const [total, setTotal] = useState(1);
+  function handleTotal() {
+    setTotal(total + 1);
+  }
+
+  useEffect(() => {
+    alert("I will render whenever u click count or total");
+  }, [count, total]);
+
+  return (
+    <>
+      <button onClick={handleClick}>Count_Increment</button>
+      <p>Count is {count}</p>
+      <br></br>
+      <button onClick={handleTotal}>Total_Increment</button>
+      <p> Total is {total}</p>
+    </>
+  ); */
+
+
+//variation 5 -- use of cleanup fn
+  const [count, setCount] = useState(0);
+
+  function handleCount() {
+    setCount(count + 1);
+  }
+
+  useEffect(() => {
+    alert("Count is updated");
+
+    return () => {
+      alert("Count is unmounted from UI"); // runs before next effect  ie if count changes  or u unmount that component if u use in app
+    };
+  }, [count]);
+
+  return (
+    <>
+      <button onClick={handleCount}>Count</button>
+      <p>Current count: {count}</p>
+    </>
+  );
+
+};
+export default App;
