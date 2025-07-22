@@ -1,24 +1,23 @@
-import React, { createContext, useState } from 'react'
-import ChildA from "./Components/ChildA";
 
 
-//UseContext --to send data from parent and how to access it child of child .. ie hierachy
-// Step 1 create user context
-const UserContext=createContext();
+import React from 'react'
+import ChildA from './Components/ChildA'
 
-//Step 2 : wrap all child inside a provider 
+const ThemeContext = React.createContext();
 
-//step3 -- Pass value 
 const App = () => {
-const[user,setUser]=useState({name:"Love"}); //creating a state var user and allocating as its name as love
+  const [theme, setTheme] = React.useState("light"); //creating a state var theme and allocating as its name as light
+
   return (
-    <> 
-      <UserContext.Provider value={user}>  {/*value passed*/}
-        <ChildA></ChildA> 
-      </UserContext.Provider> {/*ie every child is wrapped because a is wraped and b and c are in a */}
+    <>
+      <ThemeContext.Provider value={{ theme, setTheme }}> {/*value passed*/}
+        <ChildA />
+      </ThemeContext.Provider>
     </>
-  );
+  )
 }
 
 export default App
-export {UserContext}
+export { ThemeContext }
+
+
