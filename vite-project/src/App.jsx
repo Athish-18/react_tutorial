@@ -1,7 +1,5 @@
-
-
-import React from 'react'
-import ChildA from './Components/ChildA'
+import React from "react";
+import ChildA from "./Components/ChildA";
 
 const ThemeContext = React.createContext();
 
@@ -10,14 +8,14 @@ const App = () => {
 
   return (
     <>
-      <ThemeContext.Provider value={{ theme, setTheme }}> {/*value passed*/}
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        {" "}
+        {/*value passed*/}
         <ChildA />
       </ThemeContext.Provider>
     </>
-  )
-}
+  );
+};
 
-export default App
-export { ThemeContext }
-
-
+export default App;
+export { ThemeContext };
