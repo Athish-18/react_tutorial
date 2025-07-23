@@ -1,21 +1,55 @@
 import React from "react";
-import ChildA from "./Components/ChildA";
-
-const ThemeContext = React.createContext();
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./Components/Home";
+import About from "./Components/About";
+import Dashboard from "./Components/Dashboard";
+import Navbar from "./Components/Navbar";
+import ParamComp from "./Components/ParamComp";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <div>
+        <Navbar />
+        <Home />
+      </div>
+    ),
+  },
+  {
+    path: "/about",
+    element: (
+      <div>
+        <Navbar />
+        <About />
+      </div>
+    ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <div>
+        <Navbar />
+        <Dashboard />
+      </div>
+    ),
+  },
+  {
+    path: "/student/:id",
+    element: (
+      <div>
+        <Navbar />
+        <ParamComp />
+      </div>
+    ),
+  },
+]);
 
 const App = () => {
-  const [theme, setTheme] = React.useState("light"); //creating a state var theme and allocating as its name as light
-
   return (
-    <>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        {" "}
-        {/*value passed*/}
-        <ChildA />
-      </ThemeContext.Provider>
-    </>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
 };
 
 export default App;
-export { ThemeContext };
