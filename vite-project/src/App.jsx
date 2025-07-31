@@ -1,74 +1,26 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useRef } from 'react'
+import {useState,useEffect,UseRef} from 'react'
+import { set } from 'react-hook-form';
 
 const App = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm();
+  const [count,setCount]=useState(0); 
+  let val=useRef(0);// useRef is used to persist values across renders without causing re-renders ie value is stored and increased across re renders. , returns a object with current property in which value is stored ie if i click button 5 times, val.current will be 5 without it it would re render val would be 1 1 1  
 
-//To Prevent the form from submitting immediately, we can use an async function
-  // This allows us to simulate a delay (e.g., for an API call) before the form submission is processed.
-  async function onSubmit(data) {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("submitting the data", data);
+  function handleClick() {
+    val.current=val.current+1;
+    console.log('val of val', val.current);
+    setCount(count+1);
+  
   }
-
   return (
-    // Form with three fields: first name, middle name, and last name. Example of using react-hook-form
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label> First Name:</label>
-        {/* Register firstName with validation: required, minLength 2, maxLength 20 */}
-        <input
-          {...register("firstName", {
-            required: true,
-            minLength: {
-              value: 2,
-              message: "First name must be at least 2 characters long.",
-            },
-            maxLength: {
-              value: 20,
-              message: "First name must be at most 20 characters long.",
-            },
-          })}
-        />
-        {errors.firstName && <p>{errors.firstName.message}</p>}
-      </div>
-      <br />
+    <div>
+      <button onClick={handleClick}>Click me</button>
 
       <div>
-        <label> Middle Name:</label>
-        {/* Register middleName with validation: required */}
-        <input
-          {...register("middleName", {
-            required: "Please enter your middle name.",
-          })}
-        />
+        Count {count}
       </div>
-      <br />
+    </div>
+  )
+}
 
-      <div>
-        <label> Last Name:</label>
-        {/* Register lastName with validation: required and pattern */}
-        <input
-          {...register("lastName", {
-            required: true,
-            pattern: {
-              value: /^[A-Za-z]+$/i,
-              // This pattern allows only letters (A-Z, a-z)
-              message: "Last name must contain only letters.",
-            },
-          })}
-        />
-        {errors.lastName && <p>{errors.lastName.message}</p>}
-      </div>
-      <br />
-      
-      <input type="submit" disabled={isSubmitting}  value={isSubmitting ? "Submitting..." : "Submit"} />
-    </form>
-  );
-};
-
-export default App;
+export default App
