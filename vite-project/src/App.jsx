@@ -1,44 +1,28 @@
+import { useCallback, useState } from "react";
+import "./App.css";
+import ChildComponent from "./Components/ChildComponent";
 
-import { useState,useMemo } from 'react'
-import './App.css'
 
 function App() {
   const [count, setCount] = useState(0);
-  const [input, setInput] = useState(0);
 
-  function expensiveTask(num) {
-    console.log("Inside Expensive Task");
-    for(let i=0; i<=1000000000; i++) {}
-    return num*2;
-  }
-  
-  let doubleValue = useMemo(() => expensiveTask(input), [input]); // useMemo to memoize the result of expensiveTask ie it will only recompute when 'input' changes ie [input] is the dependency array and input is the variable that we are tracking for changes. It stores the result of the expensive function call and returns the cached value on subsequent renders unless the input changes. ie On subsequent renders, it will return the cached value instead of recalculating it, thus improving performance. ie On clicking increment button, the expensiveTask will not be called again unless the input changes.
-
-  
+  const handleClick = useCallback(() => { // Here we use usecallback so that the function reference remains the same across renders ie it doesn't create a new function on every render it becomes one ie count and freezes.
+    setCount(count + 1);
+  }, [count]);
 
   return (
     <div>
-      <button onClick={() => setCount(count+1)}>
-        Increment
-      </button>
-
+      <div>Count: {count}</div>
+      <br />
       <div>
-        Count: {count}
+        <button onClick={handleClick}>Increment</button>
       </div>
-
-      <input 
-        type='number'
-        placeholder='enter number'
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-
-      />
-
+      <br /> <br />
       <div>
-        Double: {doubleValue}
+        <ChildComponent buttonName="Click me" handleClick={handleClick} />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
