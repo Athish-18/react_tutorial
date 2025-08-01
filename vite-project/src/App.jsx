@@ -1,40 +1,44 @@
-import React, { useRef } from "react";
-import { useState, useEffect } from "react";
 
-const App = () => {
-  // Stopwatch state
-  const [timer, setTimer] = useState(0);
-  let timeRef = useRef(null);
+import { useState,useMemo } from 'react'
+import './App.css'
 
-  // Start timer
- const startTimer = () => {
-   if (!timeRef.current) {
-     timeRef.current = setInterval(() => { // Increment timer every second, see the flow u click on start button and function start fn called and set interval fn is called in interval of 1 sec -- ie timeref.current stores the id of the interval if not 0 starts from 1 ie 1,2,3 . When stop clicked the timeref current is cleared and the timer stops incrementing ie set to 0 using clear interval  /// UseRef is needed to persist the interval ID across renders qithout it the interval id would reset on every render therefore we use useRef to store the interval id
-       setTimer((timer) => timer + 1);
-     }, 1000);
-   }
- };
+function App() {
+  const [count, setCount] = useState(0);
+  const [input, setInput] = useState(0);
 
-  // Stop timer
-  const stopTimer = () => {
-    clearInterval(timeRef.current);
-    timeRef.current = null;
-  };
+  function expensiveTask(num) {
+    console.log("Inside Expensive Task");
+    for(let i=0; i<=1000000000; i++) {}
+    return num*2;
+  }
+  
+  let doubleValue = useMemo(() => expensiveTask(input), [input]); // useMemo to memoize the result of expensiveTask ie it will only recompute when 'input' changes ie [input] is the dependency array and input is the variable that we are tracking for changes. It stores the result of the expensive function call and returns the cached value on subsequent renders unless the input changes. ie On subsequent renders, it will return the cached value instead of recalculating it, thus improving performance. ie On clicking increment button, the expensiveTask will not be called again unless the input changes.
 
-  // Reset timer
-  const resetTimer = () => {
-    stopTimer();
-    setTimer(0);
-  };
+  
 
   return (
     <div>
-      <h2>Stopwatch</h2>
-      <div style={{ fontSize: "2rem", margin: "1rem 0" }}>{timer} s</div>
-      <button onClick={startTimer}>Start</button>
-      <button onClick={stopTimer}>Stop</button>
-      <button onClick={resetTimer}>Reset</button>
+      <button onClick={() => setCount(count+1)}>
+        Increment
+      </button>
+
+      <div>
+        Count: {count}
+      </div>
+
+      <input 
+        type='number'
+        placeholder='enter number'
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+
+      />
+
+      <div>
+        Double: {doubleValue}
+      </div>
     </div>
-  );
-};
-export default App;
+  )
+}
+
+export default App
